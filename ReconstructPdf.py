@@ -60,6 +60,9 @@ class ReconstructPdf():
                 break
             elif b'endstream\r\n' not in current_line:
                 self.buffer_size += len(current_line)
+            elif not current_line:
+                return self.fix_xref_table(self.output)
+
 
     def append(self, pdf_file):
         self.output.write(self.header_buffer.getvalue())
@@ -98,6 +101,8 @@ class ReconstructPdf():
                 if current_line == b'>>\r\n':
                     self.stream = True
                     break
+                elif not current_line:
+                    return self.fix_xref_table(self.output)
                 else:
                     self.header_buffer.write(current_line)
 
