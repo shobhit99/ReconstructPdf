@@ -107,7 +107,7 @@ class ReconstructPdf():
             current_line = pdf_file.readline()
             if not current_line:
                 self.append(pdf_file)
-                return self.output.getvalue()
+                return self.fix_xref_table(self.output)
             elif current_line.startswith(b'<< '):
                 self.handle_header(pdf_file, current_line)
             elif self.stream:
