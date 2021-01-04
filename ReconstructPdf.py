@@ -22,24 +22,24 @@ class ReconstructPdf():
                 print(self.object_positions)
                 asb = self.buffer
                 return self.buffer.getvalue()
-            if current_line.endswith(b' obj\n'):
+            if current_line.endswith(b' obj\r\n'):
                 self.buffer.write(current_line)
                 object_values = current_line.split(b' ')
                 self.object_positions[int(object_values[0])] = cursor
-            elif current_line == b'xref\n':
+            elif current_line == b'xref\r\n':
                 self.buffer.write(current_line)
                 start_xref = cursor
                 line = pdf_file.readline()
                 line = pdf_file.readline()
-                self.buffer.write(b'0 {}\n'.format(len(self.object_positions)+1))
-                self.buffer.write(b'0000000000 65535 f\n')
+                self.buffer.write(b'0 {}\r\n'.format(len(self.object_positions)+1))
+                self.buffer.write(b'0000000000 65535 f\r\n')
                 for key in self.object_positions:
                     line = pdf_file.readline()
-                    self.buffer.write(b'{:010d} 00000 n\n'.format(self.object_positions[key]))
-            elif current_line == b'startxref\n':
+                    self.buffer.write(b'{:010d} 00000 n\r\n'.format(self.object_positions[key]))
+            elif current_line == b'startxref\r\n':
                 self.buffer.write(current_line)
                 line = pdf_file.readline()
-                self.buffer.write(b'{}\n'.format(start_xref))
+                self.buffer.write(b'{}\r\n'.format(start_xref))
             else:
                 self.buffer.write(current_line)
         return 0
