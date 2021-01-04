@@ -19,8 +19,6 @@ class ReconstructPdf():
             cursor = pdf_file.tell()
             current_line = pdf_file.readline()
             if not current_line:
-                print(self.object_positions)
-                asb = self.buffer
                 return self.buffer.getvalue()
             if current_line.endswith(b' obj\r\n'):
                 self.buffer.write(current_line)
