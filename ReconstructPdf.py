@@ -19,7 +19,7 @@ class ReconstructPdf():
             cursor = pdf_file.tell()
             current_line = pdf_file.readline()
             if not current_line:
-                return self.buffer.getvalue()
+                return self.buffer
             if current_line.endswith(b' obj\r\n'):
                 self.buffer.write(current_line)
                 object_values = current_line.split(b' ')
