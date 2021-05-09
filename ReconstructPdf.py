@@ -67,7 +67,7 @@ class ReconstructPdf():
     def append(self, pdf_file):
         self.output.write(self.header_buffer.getvalue())
         if "/Length" not in self.header_buffer.getvalue():
-            self.output.write(b"/Length {}".format(buffer_size))
+            self.output.write(b"/Length {}".format(self.buffer_size))
         self.output.write(b">>\r\n" if self.single_line_header else "\r\n>>\r\n")
         self.output.write(self.buffer.getvalue())
         return self.output
